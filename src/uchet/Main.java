@@ -61,7 +61,7 @@ public class Main extends Application {
 					f.createNewFile();
 					OutputStream obj1 = new FileOutputStream(f);
 					BufferedWriter out = new BufferedWriter(new OutputStreamWriter(obj1));
-					out.write("Имя компании \n");
+					out.write("Имя организации \n");
 					out.write("c:\\ \n");
 					out.close();
 					obj1.close();
@@ -87,7 +87,6 @@ public class Main extends Application {
 	{
 		return path;
 	}
-	//jija
 	public ObservableList<Item> getItems()
 	{
 		return items;
