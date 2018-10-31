@@ -13,6 +13,11 @@ import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +32,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import uchet.model.Item;
 import uchet.model.ItemInTrash;
+import uchet.model.ItemList;
 import uchet.view.ChangeinfController;
 import uchet.view.ChooseBDController;
 import uchet.view.ChooseTableController;
@@ -50,6 +56,11 @@ public class Main extends Application {
 	private File conf;
 	private String path1;
 	
+	/**
+	 * В этом методе проверяется существует ли файл conf.txt и если он отсутствует, то он создается и заполняется 
+	 * значениями по умолчанию
+	 * @throws URISyntaxException
+	 */
 	public Main() throws URISyntaxException
 	{	
 		try {
@@ -73,20 +84,30 @@ public class Main extends Application {
 			in.close();
 			obj.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Метод, обновляющий таблицу
+	 */
 	public void refreshTable()
 	{
 		itemTable.refresh();
 	}
 	
+	/**
+	 * метод для получения пути к БД
+	 * @return путь БД
+	 */
 	public String getPath()
 	{
 		return path;
 	}
+	
+	/**
+	 * возвращает все элементы из таблицы
+	 * @return
+	 */
 	public ObservableList<Item> getItems()
 	{
 		return items;
@@ -100,6 +121,10 @@ public class Main extends Application {
 	     showChooseBD(primaryStage);
 	}
 	
+	/**
+	 * Метод, отвечающий за загрузку и отображение окна выбора бд
+	 * @param primaryStage
+	 */
 	public void showChooseBD(Stage primaryStage)
 	{
 		try {
@@ -117,7 +142,10 @@ public class Main extends Application {
 		}
 		
 	}
-
+	
+	/**
+	 * Метод, инициализирующий и добавляющий Menubar
+	 */
 	public void initMenuBar()
 	{
 		
@@ -139,7 +167,7 @@ public class Main extends Application {
 	{
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("TovList.fxml"));
+			loader.setLocation(Main.class.getResource("view/TovList.fxml"));
 			AnchorPane tovList = (AnchorPane) loader.load();
 			menuBar.setCenter(tovList);
 			TovListController controller = loader.getController();
@@ -170,6 +198,7 @@ public class Main extends Application {
             EditTovController controller = loader.getController();
             controller.setFlag(flag);
             controller.setDialogStage(dialogStage);
+            controller.setMain(this);
             controller.setItem(item);
             controller.setPath(path);
             // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
@@ -342,47 +371,53 @@ public class Main extends Application {
 	public void setPath(String path)
 	{
 		this.path = path;
-		File workdir = new File(path);
-		File[] files = workdir.listFiles();
-		for(int i = 0;i < files.length;i++)
+		File bd = new File(path + "\\bd.xml");
+		if(!bd.exists())
 		{
-			if(files[i].isFile()&&files[i].getName().charAt(files[i].getName().length()-5)=='p')
-			{
-				String art = files[i].getName().substring(0, files[i].getName().length()-5);
-				String name = "qwe";
-				int price = 0;
-				Double mkol = 0.0, skol = 0.0;
-				try
-				{
-					InputStream obj = new FileInputStream(path + "\\" + art + "n.txt");
-					BufferedReader in = new BufferedReader(new InputStreamReader(obj));
-					name = in.readLine().trim();
-					in.close();
-					obj.close();
-					obj = new FileInputStream(path + "\\" + art + "p.txt");
-					in = new BufferedReader(new InputStreamReader(obj));
-					price = Integer.parseInt(in.readLine().trim());
-					in.close();
-					obj.close();
-					obj = new FileInputStream(path + "\\" + art + "m.txt");
-					in = new BufferedReader(new InputStreamReader(obj));
-					mkol = Double.parseDouble(in.readLine().trim());
-					in.close();
-					obj.close();
-					obj = new FileInputStream(path + "\\" + art + "s.txt");
-					in = new BufferedReader(new InputStreamReader(obj));
-					skol = Double.parseDouble(in.readLine().trim());
-					in.close();
-					obj.close();
-				}
-				catch(IOException e) {}
-				
-				items.add(new Item(name, art, price, mkol, skol));
+			try {
+				bd.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+		}
+		loadItemsFromFile();
+	}
+	
+	public void loadItemsFromFile()
+	{
+		try
+		{
+			JAXBContext context = JAXBContext.newInstance(ItemList.class);
+			Unmarshaller um = context.createUnmarshaller();
+			
+			ItemList list = (ItemList) um.unmarshal(new File(path + "\\bd.xml"));
+			System.out.println(list.getItems());
+			items.addAll(list.getItems());
+			
+		}catch(Exception e) {
+				e.printStackTrace();
+			}
+	}
+	
+	public void saveItemsInFile()
+	{
+		try {
+			JAXBContext context = JAXBContext.newInstance(ItemList.class);
+			Marshaller m = context.createMarshaller();
+			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			
+			ItemList list = new ItemList();
+			System.out.println(items);
+			list.setItems(items);
+			
+			m.marshal(list, new File(path + "\\bd.xml"));
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		launch(args);
 	}
 }

@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import uchet.Main;
 import uchet.model.Item;
 
 public class EditTovController {
@@ -27,6 +28,7 @@ public class EditTovController {
 	@FXML
 	private TextField sKol;
 	
+	private Main main;
 	private Stage stage;
 	private Item item;
 	private boolean okClicked = false, flag;
@@ -38,6 +40,11 @@ public class EditTovController {
 	 
 	 public void setDialogStage(Stage dialogStage) {
 	        stage = dialogStage;
+	 }
+	 
+	 public void setMain(Main main)
+	 {
+		 this.main = main;
 	 }
 	 
 	 public void setFlag(boolean aFlag)
@@ -79,75 +86,6 @@ public class EditTovController {
 			 item.setPrice(Integer.parseInt(Price.getText()));
 			 item.setMKol(Double.parseDouble(mKol.getText()));
 			 item.setSKol(Double.parseDouble(sKol.getText()));
-			 String art = Art.getText().trim();
-			 try
-				{
-					File tovm = new File(path+"\\"+art+"m.txt");
-					File tovs = new File(path+"\\"+art+"s.txt");
-					File tovn = new File(path+"\\"+art+"n.txt");
-					File tovp = new File(path+"\\"+art+"p.txt");
-					if(flag&&(tovp.exists()||tovn.exists()||tovs.exists()||tovm.exists()))
-					{
-						Alert alert = new Alert(AlertType.ERROR);
-			            alert.initOwner(stage);
-			            alert.setTitle("Ошибка");
-			            alert.setHeaderText("Товар с таким артикулом уже существует");
-	
-			            alert.showAndWait();
-		            }
-					else if(tovp.exists()||tovn.exists()||tovs.exists()||tovm.exists())
-					{
-						OutputStream obj = new FileOutputStream(path + "\\" + art + "n.txt");
-						BufferedWriter out = new BufferedWriter(new OutputStreamWriter(obj));
-						out.write(item.getName());
-						out.close();
-						obj.close();
-						obj = new FileOutputStream(path + "\\" + art + "m.txt");
-						out = new BufferedWriter(new OutputStreamWriter(obj));
-						out.write(""+item.getMKol());
-						out.close();
-						obj.close();
-						obj = new FileOutputStream(path + "\\" + art + "s.txt");
-						out = new BufferedWriter(new OutputStreamWriter(obj));
-						out.write(""+item.getSKol());
-						out.close();
-						obj.close();
-						obj = new FileOutputStream(path + "\\" + art + "p.txt");
-						out = new BufferedWriter(new OutputStreamWriter(obj));
-						out.write(item.getPrice()+"");
-						out.close();
-						obj.close();
-					}
-					else
-					{
-						tovm.createNewFile();
-						tovs.createNewFile();
-						tovn.createNewFile();
-						tovp.createNewFile();
-						
-						OutputStream obj = new FileOutputStream(path + "\\" + art + "n.txt");
-						BufferedWriter out = new BufferedWriter(new OutputStreamWriter(obj));
-						out.write(item.getName());
-						out.close();
-						obj.close();
-						obj = new FileOutputStream(path + "\\" + art + "m.txt");
-						out = new BufferedWriter(new OutputStreamWriter(obj));
-						out.write(""+item.getMKol());
-						out.close();
-						obj.close();
-						obj = new FileOutputStream(path + "\\" + art + "s.txt");
-						out = new BufferedWriter(new OutputStreamWriter(obj));
-						out.write(""+item.getSKol());
-						out.close();
-						obj.close();
-						obj = new FileOutputStream(path + "\\" + art + "p.txt");
-						out = new BufferedWriter(new OutputStreamWriter(obj));
-						out.write(item.getPrice()+"");
-						out.close();
-						obj.close();
-						
-				}
-			}catch(Exception e) {e.printStackTrace();}
 			 okClicked = true;
 			 stage.close();
 		 }

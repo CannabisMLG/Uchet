@@ -132,14 +132,8 @@ public class TovListController {
     	int selectionIndex = itemTable.getSelectionModel().getSelectedIndex();
     	if(selectionIndex>=0)
     	{
-    		File fName = new File(path, ArtLabel.getText()+"n.txt");
-			File fPrice = new File(path, ArtLabel.getText()+"p.txt");
-			File fmKol = new File(path, ArtLabel.getText()+"m.txt");
-			File fsKol = new File(path, ArtLabel.getText()+"s.txt");
-			fName.delete();
-			fPrice.delete();
-			fmKol.delete();
-			fsKol.delete();
+    		main.getItems().remove(selectionIndex);
+    		main.saveItemsInFile();
 			itemTable.getItems().remove(selectionIndex);
     	}
     	else
@@ -164,6 +158,7 @@ public class TovListController {
     	if(main.showEditDialog(tempItem, true))
     	{
     		main.getItems().add(tempItem);
+    		main.saveItemsInFile();
     	}
     }
     
@@ -179,6 +174,7 @@ public class TovListController {
             if (okClicked) {
                 showItemDetails(selectedItem);
                 itemTable.refresh();
+   			 	main.saveItemsInFile();
             }
     	}
     	else

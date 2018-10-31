@@ -79,41 +79,17 @@ public class PrivController {
 	{
 		for(int i = 0;i<privoz.size();i++)
 		{
-			double sklad = 0, mag = 0;
-			try
-			{
-				InputStream obj = new FileInputStream(path + "\\" + privoz.get(i).artProperty().get() + "m.txt");
-				BufferedReader in = new BufferedReader(new InputStreamReader(obj));
-				mag = Double.parseDouble(in.readLine());
-				in.close();
-				obj.close();
-				obj = new FileInputStream(path + "\\" + privoz.get(i).artProperty().get() + "s.txt");
-				in = new BufferedReader(new InputStreamReader(obj));
-				sklad = Double.parseDouble(in.readLine());
-				in.close();
-				obj.close();
-				OutputStream obj1 = new FileOutputStream(path + "\\" + privoz.get(i).artProperty().get() + "m.txt");
-				BufferedWriter out = new BufferedWriter(new OutputStreamWriter(obj1));
-				out.write(""+(mag + Double.parseDouble(privoz.get(i).mKolProperty().get())));
-				out.close();
-				obj1.close();
-				obj1 = new FileOutputStream(path + "\\" + privoz.get(i).artProperty().get() + "s.txt");
-				out = new BufferedWriter(new OutputStreamWriter(obj1));
-				out.write(""+(sklad + Double.parseDouble(privoz.get(i).sKolProperty().get())));
-				out.close();
-				obj1.close();
-			}
-			catch(Exception e) {}
 			for(int j = 0;j<items.size();j++)
 			{
 				if(items.get(j).artProperty().get().equals(privoz.get(i).artProperty().get())) 
 					{
-						items.get(j).setSKol(sklad + Double.parseDouble(privoz.get(i).sKolProperty().get()));
-						items.get(j).setMKol(mag + Double.parseDouble(privoz.get(i).mKolProperty().get()));
+						items.get(j).setSKol(items.get(j).getSKol() + Double.parseDouble(privoz.get(i).sKolProperty().get()));
+						items.get(j).setMKol(items.get(j).getMKol() + Double.parseDouble(privoz.get(i).mKolProperty().get()));
 					}
 			}
 		}
 		clear();
+		main.saveItemsInFile();
 		main.refreshTable();
 		stage.close();
 	}
