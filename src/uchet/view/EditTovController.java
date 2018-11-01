@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -81,8 +82,8 @@ public class EditTovController {
 	 {
 		 if(isInputValid())
 		 {
-			 item.setName(Name.getText());
-			 item.setArt(Art.getText());
+			 item.setName(Name.getText().trim());
+			 item.setArt(Art.getText().trim());
 			 item.setPrice(Integer.parseInt(Price.getText()));
 			 item.setMKol(Double.parseDouble(mKol.getText()));
 			 item.setSKol(Double.parseDouble(sKol.getText()));
@@ -121,6 +122,16 @@ public class EditTovController {
 	        if (sKol.getText() == null || sKol.getText().length() == 0) {
 	            errorMessage += "Не указано кол-во на складе!\n"; 
 	        }
+	        
+	        ObservableList<Item> list = main.getItems();
+	        for(int i = 0;i < list.size(); i++)
+	        {
+	        	if(flag && list.get(i).getArt().equals(Art.getText().trim())) 
+	        	{
+		        	errorMessage += "Товар с таким артикулом уже существует";
+		        	break;
+	        	}
+	        }
 
 	        if (errorMessage.length() == 0) {
 	            return true;
@@ -128,8 +139,8 @@ public class EditTovController {
 	            // Показываем сообщение об ошибке.
 	            Alert alert = new Alert(AlertType.ERROR);
 	            alert.initOwner(stage);
-	            alert.setTitle("Отсутствуют значения");
-	            alert.setHeaderText("Пожалуйста, введите все значения");
+	            alert.setTitle("Некорректный ввод");
+	            alert.setHeaderText("Пожалуйста, введите все значения корректно");
 	            alert.setContentText(errorMessage);
 
 	            alert.showAndWait();
