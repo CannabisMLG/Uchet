@@ -56,15 +56,15 @@ public class TovListController {
      */
     @FXML
     private void initialize() {
-        // Инициализация таблицы адресатов с тремя столбцами.
+        // Инициализация таблицы товаров с тремя столбцами.
         NameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         ArtColumn.setCellValueFactory(cellData -> cellData.getValue().artProperty());
         KolColumn.setCellValueFactory(cellData -> cellData.getValue().KolProperty());
-     // Очистка дополнительной информации об адресате.
+     // Очистка дополнительной информации о товаре.
         showItemDetails(null);
 
         // Слушаем изменения выбора, и при изменении отображаем
-        // дополнительную информацию об адресате.
+        // дополнительную информацию о товаре.
         itemTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showItemDetails(newValue));
     }
@@ -111,7 +111,7 @@ public class TovListController {
     private void addToTrash()
     {
     	
-    	if(itemTable.getSelectionModel().getSelectedIndex()>=0)trash.add(new ItemInTrash(itemTable.getSelectionModel().getSelectedItem().getName(),itemTable.getSelectionModel().getSelectedItem().getArt(),itemTable.getSelectionModel().getSelectedItem().getPrice(),main.showKolDialog("m"),main.showKolDialog("s")));
+    	if(itemTable.getSelectionModel().getSelectedIndex()>=0) trash.add(new ItemInTrash(itemTable.getSelectionModel().getSelectedItem().getName(),itemTable.getSelectionModel().getSelectedItem().getArt(),itemTable.getSelectionModel().getSelectedItem().getPrice(),main.showKolDialog("m"),main.showKolDialog("s")));
     	else
     	{
     		Alert alert = new Alert(AlertType.WARNING);
@@ -215,93 +215,19 @@ public class TovListController {
     private void search()
     {
     	ObservableList<Item> items = main.getItems();
-    	if("".equals(searchField.getText()))
+    	ObservableList<Item> titems = FXCollections.observableArrayList();;
+    	int size = items.size(); 
+    	if(searchField.getText().trim().equals(""))
     	{
-    		int size = items.size();
-	    	for(int i = 0;i < size;i++)
-	    	{
-	    		items.remove(0);
-	    	}
-	    	File workdir = new File(main.getPath());
-	    	File[] files = workdir.listFiles();
-	    	for(int i = 0;i < files.length;i++)
-	    	{
-	    		if(files[i].isFile()&&files[i].getName().charAt(files[i].getName().length()-5)=='p')
-	    		{
-	    			String art = files[i].getName().substring(0, files[i].getName().length()-5);
-	    			String name = "qwe";
-	    			int price = 0;
-	   				Double mkol = 0.0, skol = 0.0;
-	  				try
-	  				{
-	    				InputStream obj = new FileInputStream(path + "\\" + art + "n.txt");
-	    				BufferedReader in = new BufferedReader(new InputStreamReader(obj));
-	    				name = in.readLine().trim();
-	    				in.close();
-	    				obj.close();
-	   					obj = new FileInputStream(path + "\\" + art + "p.txt");
-	    				in = new BufferedReader(new InputStreamReader(obj));
-	    				price = Integer.parseInt(in.readLine().trim());
-	    				in.close();
-	    				obj.close();
-	    				obj = new FileInputStream(path + "\\" + art + "m.txt");
-	    				in = new BufferedReader(new InputStreamReader(obj));
-	    				mkol = Double.parseDouble(in.readLine().trim());
-	    				in.close();
-	    				obj.close();
-	    				obj = new FileInputStream(path + "\\" + art + "s.txt");
-	    				in = new BufferedReader(new InputStreamReader(obj));
-	    				skol = Double.parseDouble(in.readLine().trim());
-	    				in.close();
-	    				obj.close();
-	    			}
-	   				catch(IOException e) {}
-	    			items.add(new Item(name, art, price, mkol, skol));
-	    		}
-	    	}
-	    }
+    		itemTable.setItems(items);
+    	}
     	else
     	{
-    		int size = items.size();
-	    	for(int i = 0;i < size;i++)
+	    	for(int i = 0; i < items.size(); i++)
 	    	{
-	    		items.remove(0);
-	    	}
-	    	File workdir = new File(main.getPath());
-	    	File[] files = workdir.listFiles();
-	    	for(int i = 0;i < files.length;i++)
-	    	{
-	    		if(files[i].isFile()&&files[i].getName().charAt(files[i].getName().length()-5)=='p')
+	    		if(!items.get(i).getArt().equals(searchField.getText().trim()) && !items.get(i).getName().equals(searchField.getText().trim())) 
 	    		{
-	    			String art = files[i].getName().substring(0, files[i].getName().length()-5);
-	    			String name = "qwe";
-	    			int price = 0;
-	   				Double mkol = 0.0, skol = 0.0;
-	  				try
-	  				{
-	    				InputStream obj = new FileInputStream(path + "\\" + art + "n.txt");
-	    				BufferedReader in = new BufferedReader(new InputStreamReader(obj));
-	    				name = in.readLine().trim();
-	    				in.close();
-	    				obj.close();
-	   					obj = new FileInputStream(path + "\\" + art + "p.txt");
-	    				in = new BufferedReader(new InputStreamReader(obj));
-	    				price = Integer.parseInt(in.readLine().trim());
-	    				in.close();
-	    				obj.close();
-	    				obj = new FileInputStream(path + "\\" + art + "m.txt");
-	    				in = new BufferedReader(new InputStreamReader(obj));
-	    				mkol = Double.parseDouble(in.readLine().trim());
-	    				in.close();
-	    				obj.close();
-	    				obj = new FileInputStream(path + "\\" + art + "s.txt");
-	    				in = new BufferedReader(new InputStreamReader(obj));
-	    				skol = Double.parseDouble(in.readLine().trim());
-	    				in.close();
-	    				obj.close();
-	    			}
-	   				catch(IOException e) {}
-	    			if(art.toLowerCase().indexOf(searchField.getText().toLowerCase())>-1||name.toLowerCase().indexOf(searchField.getText().toLowerCase())>-1)items.add(new Item(name, art, price, mkol, skol));
+	    			titems.add(items.get(i));
 	    		}
 	    	}
     	}

@@ -47,7 +47,7 @@ public class Main extends Application {
 	
 	private Stage stage;
 	private BorderPane menuBar;
-	private ObservableList<Item> items = FXCollections.observableArrayList();
+	private ObservableList<Item> items = FXCollections.observableArrayList(), itemsclone = FXCollections.observableArrayList();
 	private ObservableList<ItemInTrash> trash = FXCollections.observableArrayList();
 	private ObservableList<Item> privoz = FXCollections.observableArrayList();
 	private String path;
@@ -111,6 +111,11 @@ public class Main extends Application {
 	public ObservableList<Item> getItems()
 	{
 		return items;
+	}
+	
+	public ObservableList<Item> get—Items()
+	{
+		return itemsclone;
 	}
 
 	@Override
@@ -393,6 +398,9 @@ public class Main extends Application {
 			ItemList list = (ItemList) um.unmarshal(new File(path + "\\bd.xml"));
 			System.out.println(list.getItems());
 			items.addAll(list.getItems());
+			
+			list = (ItemList) um.unmarshal(new File(path + "\\bd.xml"));
+			itemsclone.addAll(list.getItems());
 			
 		}catch(Exception e) {
 				e.printStackTrace();

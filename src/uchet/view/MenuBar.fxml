@@ -11,10 +11,15 @@
         <menus>
           <Menu mnemonicParsing="false" text="Привоз/Корзина">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#priv" text="Привоз" />
+              <MenuItem mnemonicParsing="false" onAction="#showCheks" text="Привоз" />
                   <MenuItem mnemonicParsing="false" onAction="#sell" text="Корзина" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Просмотр">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showCheks" text="Просмотр чеков" />
+               </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Настройки">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#changeKomp" text="Изменение данных о компании" />

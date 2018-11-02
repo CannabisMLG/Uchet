@@ -1,5 +1,9 @@
 package uchet.view;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import uchet.Main;
 
@@ -15,6 +19,22 @@ public class MenuBarController {
 	private void priv()
 	{
 		main.showPrivFrame();
+	}
+	
+	@FXML
+	private void showCheks()
+	{
+		System.out.println("кек");
+		File l = new File(main.getPath() + "\\Чеки");
+		Desktop desktop = null;
+		if (Desktop.isDesktopSupported()) {
+		    desktop = Desktop.getDesktop();
+		}
+		try {
+		    desktop.open(l);
+		} catch (IOException ioe) {
+		    ioe.printStackTrace();
+		}
 	}
 	
 	@FXML
