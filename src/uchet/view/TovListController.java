@@ -30,7 +30,7 @@ public class TovListController {
 	private TableColumn<Item, String> KolColumn;
 	
 	@FXML
-	TextField searchField;
+	private TextField searchField;
 	
 	@FXML
 	private Label NameLabel;
@@ -44,6 +44,7 @@ public class TovListController {
 	private Label sKolLabel;
 	
 	private ObservableList<ItemInTrash> trash = FXCollections.observableArrayList();
+	private ObservableList<Item> titems = FXCollections.observableArrayList();
 	
 	Main main;
 	private String path;
@@ -89,6 +90,14 @@ public class TovListController {
              mKolLabel.setText("");
              sKolLabel.setText("");
         }
+    }
+    public TextField getSS()
+    {
+    	return searchField;
+    }
+    public TovListController get()
+    {
+    	return this;
     }
     /**
      * Вызывается главным приложением, которое даёт на себя ссылку.
@@ -212,22 +221,25 @@ public class TovListController {
      * Метод, выполняющий поиск по введенной строке
      */
     @FXML
-    private void search()
+    public void search()
     {
     	ObservableList<Item> items = main.getItems();
-    	ObservableList<Item> titems = FXCollections.observableArrayList();
-    	titems.clear();
     	if(searchField.getText().trim().equals(""))
     	{
+    		System.out.println(items);
+    		for(int i = 0; i  < titems.size(); i++) items.add(titems.get(i));
+    		System.out.println(items);
     		itemTable.setItems(items);
     	}
     	else
     	{
+    		titems.clear();
 	    	for(int i = 0; i < items.size(); i++)
 	    	{
 	    		if(items.get(i).getName().lastIndexOf(searchField.getText().toLowerCase().trim()) != -1 || items.get(i).getArt().lastIndexOf(searchField.getText().toLowerCase().trim()) != -1) 
 	    		{
 	    			titems.add(items.get(i));
+	    			items.remove(i);
 	    		}
 	    	}
 	    	itemTable.setItems(titems);

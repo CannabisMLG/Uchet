@@ -11,7 +11,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Привоз/Корзина">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#showCheks" text="Привоз" />
+              <MenuItem mnemonicParsing="false" onAction="#priv" text="Привоз" />
                   <MenuItem mnemonicParsing="false" onAction="#sell" text="Корзина" />
             </items>
           </Menu>

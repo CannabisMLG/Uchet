@@ -18,6 +18,7 @@ public class MenuBarController {
 	@FXML
 	private void priv()
 	{
+		main.recoverySearch();
 		main.showPrivFrame();
 	}
 	
@@ -40,6 +41,7 @@ public class MenuBarController {
 	@FXML
 	private void sell()
 	{
+		main.recoverySearch();
 		main.showSellFrame();
 	}
 	

@@ -55,6 +55,8 @@ public class Main extends Application {
 	private String CompName;
 	private File conf;
 	private String path1;
+	private TovListController tlc;
+	private MenuBarController mbc;
 	
 	/**
 	 * ¬ этом методе провер€етс€ существует ли файл conf.txt и если он отсутствует, то он создаетс€ и заполн€етс€ 
@@ -168,6 +170,12 @@ public class Main extends Application {
 		stage.show();
 	}
 	
+	public void recoverySearch()
+	{
+		tlc.getSS().setText("");
+		tlc.search();
+	}
+	
 	public void showTovList()
 	{
 		try {
@@ -177,6 +185,7 @@ public class Main extends Application {
 			menuBar.setCenter(tovList);
 			TovListController controller = loader.getController();
 			controller.setMainApp(this, path, trash);
+			tlc = controller.get();
 			itemTable = controller.getTable(); 
 		} catch (IOException e) {
 			e.printStackTrace();
