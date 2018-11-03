@@ -215,8 +215,8 @@ public class TovListController {
     private void search()
     {
     	ObservableList<Item> items = main.getItems();
-    	ObservableList<Item> titems = FXCollections.observableArrayList();;
-    	int size = items.size(); 
+    	ObservableList<Item> titems = FXCollections.observableArrayList();
+    	titems.clear();
     	if(searchField.getText().trim().equals(""))
     	{
     		itemTable.setItems(items);
@@ -225,11 +225,12 @@ public class TovListController {
     	{
 	    	for(int i = 0; i < items.size(); i++)
 	    	{
-	    		if(!items.get(i).getArt().equals(searchField.getText().trim()) && !items.get(i).getName().equals(searchField.getText().trim())) 
+	    		if(items.get(i).getName().lastIndexOf(searchField.getText().toLowerCase().trim()) != -1 || items.get(i).getArt().lastIndexOf(searchField.getText().toLowerCase().trim()) != -1) 
 	    		{
 	    			titems.add(items.get(i));
 	    		}
 	    	}
+	    	itemTable.setItems(titems);
     	}
     }
 }
