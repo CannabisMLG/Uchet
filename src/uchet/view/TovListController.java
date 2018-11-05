@@ -47,7 +47,6 @@ public class TovListController {
 	private ObservableList<Item> titems = FXCollections.observableArrayList();
 	
 	Main main;
-	private String path;
 
 	public TovListController() {}
 	
@@ -106,7 +105,6 @@ public class TovListController {
      */
     public void setMainApp(Main main, String path, ObservableList<ItemInTrash> trash) {
         this.main = main;
-        this.path = path;
         this.trash = trash;
 
         // Добавление в таблицу данных из наблюдаемого списка
@@ -227,12 +225,14 @@ public class TovListController {
     	if(searchField.getText().trim().equals(""))
     	{
     		System.out.println(items);
-    		for(int i = 0; i  < titems.size(); i++) items.add(titems.get(i));
+    		items.addAll(titems);
     		System.out.println(items);
     		itemTable.setItems(items);
+    		titems.clear();
     	}
     	else
     	{
+    		items.addAll(titems);
     		titems.clear();
 	    	for(int i = 0; i < items.size(); i++)
 	    	{
