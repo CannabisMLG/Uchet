@@ -205,6 +205,7 @@ public class TovListController {
             boolean okClicked = main.showEditDialog(selectedItem, true);
             if (okClicked) {
                 showItemDetails(selectedItem);
+                main.getItems().add(selectedItem);
                 itemTable.refresh();
             }
         }
