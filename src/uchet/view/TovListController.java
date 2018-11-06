@@ -207,6 +207,7 @@ public class TovListController {
                 showItemDetails(selectedItem);
                 main.getItems().add(selectedItem);
                 itemTable.refresh();
+   			 	main.saveItemsInFile();
             }
         }
     }
