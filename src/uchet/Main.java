@@ -11,28 +11,20 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
-import java.util.Scanner;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import uchet.model.Item;
-import uchet.model.ItemInTrash;
-import uchet.model.ItemList;
+import uchet.model.*;
 import uchet.view.ChangeinfController;
 import uchet.view.ChooseBDController;
 import uchet.view.ChooseTableController;
@@ -401,7 +393,8 @@ public class Main extends Application {
 	{
 		try
 		{
-			JAXBContext context = JAXBContext.newInstance(ItemList.class);
+			JAXBContext context = JAXBContext.newInstance(
+					ItemList.class);
 			Unmarshaller um = context.createUnmarshaller();
 			
 			ItemList list = (ItemList) um.unmarshal(new File(path + "\\bd.xml"));
