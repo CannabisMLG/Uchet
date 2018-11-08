@@ -45,10 +45,7 @@ public class Main extends Application {
 	private String path;
 	private TableView<Item> itemTable;
 	private String CompName;
-	private File conf;
-	private String path1;
 	private TovListController tlc;
-	private MenuBarController mbc;
 	
 	/**
 	 * В этом методе проверяется существует ли файл conf.txt и если он отсутствует, то он создается и заполняется 
@@ -80,36 +77,6 @@ public class Main extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	/**
-	 * Метод, обновляющий таблицу
-	 */
-	public void refreshTable()
-	{
-		itemTable.refresh();
-	}
-	
-	/**
-	 * метод для получения пути к БД
-	 * @return путь БД
-	 */
-	public String getPath()
-	{
-		return path;
-	}
-	
-	/**
-	 * возвращает все элементы из таблицы
-	 * @return
-	 */
-	public ObservableList<Item> getItems()
-	{
-		return items;
-	}
-	
-	public ObservableList<Item> getСItems()
-	{
-		return itemsclone;
 	}
 
 	@Override
@@ -161,7 +128,9 @@ public class Main extends Application {
 		stage.setScene(scene);
 		stage.show();
 	}
-	
+	/**
+	 * Метод, возвращающий все товары из списка поиска в остновной список товаров
+	 */
 	public void recoverySearch()
 	{
 		tlc.getSS().setText("");
@@ -206,7 +175,6 @@ public class Main extends Application {
             controller.setDialogStage(dialogStage);
             controller.setMain(this);
             controller.setItem(item);
-            controller.setPath(path);
             // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
             dialogStage.showAndWait();
 
@@ -276,7 +244,6 @@ public class Main extends Application {
             	summ+=Double.parseDouble(trash.get(i).SummProperty().get());
             }
             controller.setItog(summ);
-            // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
             dialogStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -302,7 +269,6 @@ public class Main extends Application {
 	        PrivController controller = loader.getController();
 	        controller.setDialogStage(dialogStage);
 	        controller.setMain(this);
-            controller.setPath(path);
             controller.setPriv(privoz);
             controller.setItems(items);
 	        dialogStage.showAndWait();
@@ -355,25 +321,48 @@ public class Main extends Application {
 		}catch(IOException e) {e.printStackTrace();}
 	}
 	
+	
+	/**
+	 * Метод для получения товаров из корзины
+	 * @return
+	 */
 	public ObservableList<ItemInTrash> getItemsInTrash()
 	{
 		return trash;
 	}
-	
+	/**
+	 * Метод для получения товаров на привоз
+	 * @return
+	 */
 	public ObservableList<Item> getPrivoz()
 	{
 		return privoz;
 	}
 	
+	/**
+	 * Метод для изменения имени компании
+	 * @param CompName - новое имя
+	 */
 	public void setCompName(String CompName)
 	{
 		this.CompName = CompName;
 	}
 	
+	/**
+	 * Метод, возвращающий основное окно
+	 * @return
+	 */
 	public Stage getStage()
 	{
 		return stage;
 	}
+	
+	/**
+	 * метод, устанавливающий путь к папке, содержащей БД,
+	 * создабщий xml-файл при необходимости и запускающий метод
+	 * для добавления товаров из xml-файла
+	 * @param path
+	 */
 	public void setPath(String path)
 	{
 		this.path = path;
@@ -389,6 +378,9 @@ public class Main extends Application {
 		loadItemsFromFile();
 	}
 	
+	/**
+	 * Метод для чтения товаров из xml-файла
+	 */
 	public void loadItemsFromFile()
 	{
 		try
@@ -409,6 +401,9 @@ public class Main extends Application {
 			}
 	}
 	
+	/**
+	 * Метод для записи товаров в xml-файла
+	 */
 	public void saveItemsInFile()
 	{
 		try {
@@ -424,6 +419,37 @@ public class Main extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Метод, обновляющий таблицу
+	 */
+	public void refreshTable()
+	{
+		itemTable.refresh();
+	}
+	
+	/**
+	 * метод для получения пути к БД
+	 * @return путь БД
+	 */
+	public String getPath()
+	{
+		return path;
+	}
+	
+	/**
+	 * возвращает все элементы из таблицы
+	 * @return
+	 */
+	public ObservableList<Item> getItems()
+	{
+		return items;
+	}
+	
+	public ObservableList<Item> getСItems()
+	{
+		return itemsclone;
 	}
 	
 	public static void main(String[] args) 

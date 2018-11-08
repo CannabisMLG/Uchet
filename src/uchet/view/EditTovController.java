@@ -1,12 +1,6 @@
 package uchet.view;
 
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -32,8 +26,7 @@ public class EditTovController {
 	private Main main;
 	private Stage stage;
 	private Item item;
-	private boolean okClicked = false, flag;
-	private String path = "";
+	private boolean okClicked = false, flag; // flag нужен для определения обстоятельсв было вызвано окно изменения товара
 	
 	 @FXML
 	 private void initialize() {
@@ -43,6 +36,10 @@ public class EditTovController {
 	        stage = dialogStage;
 	 }
 	 
+	 /**
+	  * метод получающий ссылку на main
+	  * @param main
+	  */
 	 public void setMain(Main main)
 	 {
 		 this.main = main;
@@ -92,11 +89,6 @@ public class EditTovController {
 		 }
 	 }
 	 
-	 public void setPath(String path)
-	 {
-		 this.path = path;
-	 }
-	 
 	 /**
 	  * Метод, проверяющий все ли поля введены
 	  * @return true - все поля введены, false - какое-то из полей не введено
@@ -128,7 +120,7 @@ public class EditTovController {
 	        {
 	        	if(flag && list.get(i).getArt().equals(Art.getText().trim())) 
 	        	{
-		        	errorMessage += "Òîâàð ñ òàêèì àðòèêóëîì óæå ñóùåñòâóåò";
+		        	errorMessage += "Товар с таким артикулом уже существует";
 		        	break;
 	        	}
 	        }
@@ -139,8 +131,8 @@ public class EditTovController {
 	            // Показываем сообщение об ошибке.
 	            Alert alert = new Alert(AlertType.ERROR);
 	            alert.initOwner(stage);
-	            alert.setTitle("Отсутствуют значения");
-	            alert.setHeaderText("Пожалуйста, введите все значения");
+	            alert.setTitle("Некорректный ввод");
+	            alert.setHeaderText("Пожалуйста, введите все значения корректно");
 	            alert.setContentText(errorMessage);
 
 	            alert.showAndWait();

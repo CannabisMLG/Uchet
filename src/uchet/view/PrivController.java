@@ -1,14 +1,5 @@
 package uchet.view;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -36,7 +27,6 @@ public class PrivController {
 	
 	private Main main;
 	private Stage stage;
-	private String path;
 	private ObservableList<Item> privoz = FXCollections.observableArrayList();
 	private ObservableList<Item> items = FXCollections.observableArrayList();
 	
@@ -117,10 +107,6 @@ public class PrivController {
 
 	public void setTable(TableView<Item> itemTable) {
 		this.itemTable = itemTable;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
 	}
 
 	public void setItems(ObservableList<Item> items) {

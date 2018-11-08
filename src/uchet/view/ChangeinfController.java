@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +19,6 @@ import uchet.Main;
 public class ChangeinfController {
 	@FXML
 	private TextField name;
-	private String CompName;
 	private File conf;
 	private Stage stage;
 	private Main main;

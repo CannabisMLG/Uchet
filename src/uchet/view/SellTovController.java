@@ -1,16 +1,9 @@
 package uchet.view;
 
 import java.awt.Desktop;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -271,7 +264,10 @@ public class SellTovController {
 	public void setPath(String path)
 	{
 		this.path = path;
-		fileName = path + "\\„еки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + "\\" + cal.get(Calendar.DATE) + "\\" + cal.get(Calendar.DATE)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+"-"+cal.get(Calendar.HOUR)+"-"+cal.get(Calendar.MINUTE)+"-"+cal.get(Calendar.SECOND) + "1.xls";
+		fileName = path + "\\„еки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + 
+				"\\" + cal.get(Calendar.DATE) + "\\" + cal.get(Calendar.DATE)+"-"+(cal.get(Calendar.MONTH)+1)+"-"
+				+cal.get(Calendar.YEAR)+"-"+cal.get(Calendar.HOUR)+"-"+cal.get(Calendar.MINUTE)+"-"+cal.get(Calendar.SECOND) +
+				"1.xls";
 	}
 
 	public void setDialogStage(Stage dialogStage) {
@@ -296,7 +292,7 @@ public class SellTovController {
 	}
 	
 	/**
-	 * ћетод, сохран€ющий чек в виде xml таблицы
+	 * ћетод, сохран€ющий чек в виде excel таблицы
 	 */
 	private void saveCheck()
 	{
@@ -372,6 +368,12 @@ public class SellTovController {
             e.printStackTrace();
         }
 	}
+	
+	/**
+	 * 
+	 * @param book
+	 * @return
+	 */
 	private HSSFCellStyle createCellStyleForTable(HSSFWorkbook book)
 	{
 	    BorderStyle thin  = BorderStyle.THIN;
