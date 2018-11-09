@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.xml.bind.*;
 
@@ -46,6 +48,7 @@ public class Main extends Application {
 	private TableView<Item> itemTable;
 	private String CompName;
 	private TovListController tlc;
+	private double tCash = 0;
 	
 	/**
 	 * В этом методе проверяется существует ли файл conf.txt и если он отсутствует, то он создается и заполняется 
@@ -321,7 +324,6 @@ public class Main extends Application {
 		}catch(IOException e) {e.printStackTrace();}
 	}
 	
-	
 	/**
 	 * Метод для получения товаров из корзины
 	 * @return
@@ -375,6 +377,39 @@ public class Main extends Application {
 				e.printStackTrace();
 			}
 		}
+		
+		GregorianCalendar cal = new GregorianCalendar();
+		File file = new File(path + "\\Чеки\\" + cal.get(Calendar.YEAR));
+		if(!file.exists())
+		{
+			file.mkdirs();
+		}
+		file = new File(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1));
+		if(!file.exists())
+		{
+			file.mkdirs();
+		}
+		file = new File(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + "\\" + cal.get(Calendar.DATE));
+		if(!file.exists())
+		{
+			file.mkdirs();
+		}
+		File tcash = new File(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + 
+				"\\" + cal.get(Calendar.DATE) + "\\tCash.txt");
+		if(!tcash.exists())
+		{
+			try {
+				tcash.createNewFile();
+				OutputStream obj = new FileOutputStream(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + 
+						"\\" + cal.get(Calendar.DATE) + "\\tCash.txt");
+	 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(obj));
+	 			out.write("0");
+	 			out.close();
+	 			obj.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		loadItemsFromFile();
 	}
 	
@@ -396,6 +431,14 @@ public class Main extends Application {
 			list = (ItemList) um.unmarshal(new File(path + "\\bd.xml"));
 			itemsclone.addAll(list.getItems());
 			
+ 			GregorianCalendar cal = new GregorianCalendar();
+			InputStream obj = new FileInputStream(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + 
+ 					"\\" + cal.get(Calendar.DATE) + "\\tCash.txt");
+ 			BufferedReader in = new BufferedReader(new InputStreamReader(obj));
+ 			tCash = Double.parseDouble(in.readLine());
+ 			in.close();
+ 			obj.close();
+			
 		}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -414,8 +457,14 @@ public class Main extends Application {
 			ItemList list = new ItemList();
 			System.out.println(items);
 			list.setItems(items);
-			
 			m.marshal(list, new File(path + "\\bd.xml"));
+			GregorianCalendar cal = new GregorianCalendar();
+			OutputStream obj = new FileOutputStream(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + 
+					"\\" + cal.get(Calendar.DATE) + "\\tCash.txt");
+ 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(obj));
+ 			out.write(getTCash() + "");
+ 			out.close();
+ 			obj.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -450,6 +499,16 @@ public class Main extends Application {
 	public ObservableList<Item> getСItems()
 	{
 		return itemsclone;
+	}
+	
+	public void plusTCash(double cash)
+	{
+		tCash+=cash;
+	}
+	
+	public double getTCash()
+	{
+		return tCash;
 	}
 	
 	public static void main(String[] args) 

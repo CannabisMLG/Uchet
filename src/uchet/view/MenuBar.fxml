@@ -20,6 +20,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#showCheks" text="Просмотр чеков" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Касса">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showCash" text="Просмотр кассы" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Настройки">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#changeKomp" text="Изменение данных о компании" />

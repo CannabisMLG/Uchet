@@ -45,7 +45,6 @@ public class ChangeinfController {
 			in.close();
 			obj.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

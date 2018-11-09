@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import uchet.Main;
 
 public class MenuBarController {
@@ -20,6 +22,17 @@ public class MenuBarController {
 	{
 		main.recoverySearch();
 		main.showPrivFrame();
+	}
+	
+	@FXML
+	private void showCash()
+	{
+		Alert alert = new Alert(AlertType.INFORMATION);
+        alert.initOwner(main.getStage());
+        alert.setTitle("Касса");
+        alert.setHeaderText("Количество денег на данный момент");
+        alert.setContentText("В кассе: " + main.getTCash() + " рублей.");
+        alert.showAndWait();
 	}
 	
 	@FXML
