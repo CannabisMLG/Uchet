@@ -85,8 +85,9 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		 this.stage = primaryStage;
-	     this.stage.setTitle("Учет by CannabisMLG");
+		 stage = primaryStage;
+		 stage.setResizable(false);
+	     stage.setTitle("Учет by CannabisMLG");
 	     
 	     showChooseBD(primaryStage);
 	}
@@ -123,6 +124,7 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/MenuBar.fxml"));
 			menuBar = (BorderPane) loader.load();
+	        stage.setResizable(true);
 			MenuBarController controller = loader.getController();
 			controller.setMain(this);
 		} catch (IOException e) {
@@ -168,6 +170,7 @@ public class Main extends Application {
 
             // Создаём диалоговое окно Stage.
             Stage dialogStage = new Stage();
+	        dialogStage.setResizable(false);
             dialogStage.setTitle("Изменение товара");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(stage);
@@ -200,6 +203,7 @@ public class Main extends Application {
 
             // Создаём диалоговое окно Stage.
             Stage dialogStage = new Stage();
+	        dialogStage.setResizable(false);
             dialogStage.setTitle("Введите количество");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(stage);
@@ -289,6 +293,7 @@ public class Main extends Application {
 	
 	        // Создаём диалоговое окно Stage.
 	        Stage dialogStage = new Stage();
+	        dialogStage.setResizable(false);
 	        dialogStage.setTitle("Привоз");
 	        dialogStage.initModality(Modality.WINDOW_MODAL);
 	        dialogStage.initOwner(stage);
@@ -312,6 +317,7 @@ public class Main extends Application {
 	
 	        // Создаём диалоговое окно Stage.
 	        Stage dialogStage = new Stage();
+	        dialogStage.setResizable(false);
 	        dialogStage.setTitle("Настройки");
 	        dialogStage.initModality(Modality.WINDOW_MODAL);
 	        dialogStage.initOwner(stage);
@@ -335,6 +341,7 @@ public class Main extends Application {
 	
 	        // Создаём диалоговое окно Stage.
 	        Stage dialogStage = new Stage();
+	        dialogStage.setResizable(false);
 	        dialogStage.setTitle("Просмотр выручки за период");
 	        dialogStage.initModality(Modality.WINDOW_MODAL);
 	        dialogStage.initOwner(stage);

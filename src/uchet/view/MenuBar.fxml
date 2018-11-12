@@ -19,14 +19,10 @@
             <Menu mnemonicParsing="false" text="Просмотр">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#showCheks" text="Просмотр чеков" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Касса">
-              <items>
-                  <MenuItem mnemonicParsing="false" onAction="#checkPer" text="Просмотр выручки за период..." />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#showCash" text="Просмотр кассы за сегодня" />
-              </items>
+                  <MenuItem mnemonicParsing="false" onAction="#checkPer" text="Просмотр выручки за период..." />
+                  <MenuItem mnemonicParsing="false" onAction="#showCash" text="Просмотр выручки за сегодня" />
+               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Настройки">
               <items>

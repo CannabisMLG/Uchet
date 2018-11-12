@@ -29,17 +29,17 @@ public class MenuBarController {
 	{
 		Alert alert = new Alert(AlertType.INFORMATION);
         alert.initOwner(main.getStage());
-        alert.setTitle("Касса");
-        alert.setHeaderText("Количество денег на данный момент");
-        alert.setContentText("В кассе: " + main.getTCash() + " рублей.");
+        alert.setTitle("РљР°СЃСЃР°");
+        alert.setHeaderText("Р’С‹СЂСѓС‡РєР° РЅР° РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚");
+        alert.setContentText("Р’ РєР°СЃСЃРµ: " + main.getTCash() + " в‚Ѕ");
         alert.showAndWait();
 	}
 	
 	@FXML
 	private void showCheks()
 	{
-		System.out.println("кек");
-		File l = new File(main.getPath() + "\\Чеки");
+		System.out.println("РєРµРє");
+		File l = new File(main.getPath() + "\\Р§РµРєРё");
 		Desktop desktop = null;
 		if (Desktop.isDesktopSupported()) {
 		    desktop = Desktop.getDesktop();
