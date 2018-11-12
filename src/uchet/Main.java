@@ -28,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import uchet.model.*;
 import uchet.view.ChangeinfController;
+import uchet.view.CheckPerController;
 import uchet.view.ChooseBDController;
 import uchet.view.ChooseTableController;
 import uchet.view.EditTovController;
@@ -324,6 +325,29 @@ public class Main extends Application {
 		}catch(IOException e) {e.printStackTrace();}
 	}
 	
+	public void showCheckPerDialog()
+	{
+		try
+		{
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(Main.class.getResource("view/CheckPer.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+	
+	        // Создаём диалоговое окно Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Просмотр выручки за период");
+	        dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.initOwner(stage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+	
+	        CheckPerController controller = loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        controller.setMain(this);
+	        dialogStage.showAndWait();
+		}catch(IOException e) {e.printStackTrace();}
+	}
+	
 	/**
 	 * Метод для получения товаров из корзины
 	 * @return
@@ -379,29 +403,18 @@ public class Main extends Application {
 		}
 		
 		GregorianCalendar cal = new GregorianCalendar();
-		File file = new File(path + "\\Чеки\\" + cal.get(Calendar.YEAR));
+		File file = new File(path + "\\Выручка");
 		if(!file.exists())
 		{
 			file.mkdirs();
 		}
-		file = new File(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1));
-		if(!file.exists())
-		{
-			file.mkdirs();
-		}
-		file = new File(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + "\\" + cal.get(Calendar.DATE));
-		if(!file.exists())
-		{
-			file.mkdirs();
-		}
-		File tcash = new File(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + 
-				"\\" + cal.get(Calendar.DATE) + "\\tCash.txt");
+		File tcash = new File(path + "\\Выручка\\" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH)+1) + 
+					"-" + cal.get(Calendar.DATE) + ".txt");
 		if(!tcash.exists())
 		{
 			try {
 				tcash.createNewFile();
-				OutputStream obj = new FileOutputStream(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + 
-						"\\" + cal.get(Calendar.DATE) + "\\tCash.txt");
+				OutputStream obj = new FileOutputStream(tcash);
 	 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(obj));
 	 			out.write("0");
 	 			out.close();
@@ -432,8 +445,8 @@ public class Main extends Application {
 			itemsclone.addAll(list.getItems());
 			
  			GregorianCalendar cal = new GregorianCalendar();
-			InputStream obj = new FileInputStream(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + 
- 					"\\" + cal.get(Calendar.DATE) + "\\tCash.txt");
+			InputStream obj = new FileInputStream(path + "\\Выручка\\" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH)+1) + 
+ 					"-" + cal.get(Calendar.DATE) + ".txt");
  			BufferedReader in = new BufferedReader(new InputStreamReader(obj));
  			tCash = Double.parseDouble(in.readLine());
  			in.close();
@@ -459,8 +472,8 @@ public class Main extends Application {
 			list.setItems(items);
 			m.marshal(list, new File(path + "\\bd.xml"));
 			GregorianCalendar cal = new GregorianCalendar();
-			OutputStream obj = new FileOutputStream(path + "\\Чеки\\" + cal.get(Calendar.YEAR) + "\\" + (cal.get(Calendar.MONTH)+1) + 
-					"\\" + cal.get(Calendar.DATE) + "\\tCash.txt");
+			OutputStream obj = new FileOutputStream(path + "\\Выручка\\" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH)+1) + 
+ 					"-" + cal.get(Calendar.DATE) + ".txt");
  			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(obj));
  			out.write(getTCash() + "");
  			out.close();

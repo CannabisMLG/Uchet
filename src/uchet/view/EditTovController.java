@@ -29,8 +29,7 @@ public class EditTovController {
 	private boolean okClicked = false, flag; // flag нужен для определения обстоятельсв было вызвано окно изменения товара
 	
 	 @FXML
-	 private void initialize() {
-	 }
+	 private void initialize(){}
 	 
 	 public void setDialogStage(Stage dialogStage) {
 	        stage = dialogStage;

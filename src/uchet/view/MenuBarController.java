@@ -59,6 +59,12 @@ public class MenuBarController {
 	}
 	
 	@FXML
+	private void checkPer()
+	{
+		main.showCheckPerDialog();
+	}
+	
+	@FXML
 	private void changeKomp()
 	{
 		main.showChangeinfDialog();

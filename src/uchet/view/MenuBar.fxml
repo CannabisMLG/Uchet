@@ -12,6 +12,7 @@
           <Menu mnemonicParsing="false" text="Привоз/Корзина">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#priv" text="Привоз" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#sell" text="Корзина" />
             </items>
           </Menu>
@@ -22,7 +23,9 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Касса">
               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#showCash" text="Просмотр кассы" />
+                  <MenuItem mnemonicParsing="false" onAction="#checkPer" text="Просмотр выручки за период..." />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#showCash" text="Просмотр кассы за сегодня" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Настройки">
